@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridFilterModel } from "@mui/x-data-grid";
+import history from "../../utils/history";
 
 interface PatientData {
   id: string;
@@ -9,12 +10,13 @@ interface PatientData {
 }
 
 const columns = [
-  { field: "id", headerName: "Patient ID", flex: 1 },
+  { field: "id", headerName: "Patient ID", flex: 1, filterable: false },
   {
     field: "name",
     headerName: "Patient Name",
     type: "string",
     flex: 1,
+    filterable: false,
   },
   {
     field: "update",
@@ -26,7 +28,8 @@ const columns = [
     field: "status",
     headerName: "Status",
     flex: 1,
-    type: "string",
+    type: "singleSelect",
+    valueOptions: ["open", "closed"],
   },
 ];
 const loadServerRows = (
@@ -42,7 +45,7 @@ const loadServerRows = (
           id: ((page || 0) * 10 + i).toString(),
           name: `John Doe ${search || ""}`,
           update: new Date(),
-          status: Math.random() < 0.5 ? "completed" : "processing",
+          status: Math.random() < 0.5 ? "open" : "closed",
         });
       }
       resolve(newData);
@@ -55,6 +58,11 @@ export default function PatientTable({ search }: { search: string }) {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState<PatientData[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  //   const [filterValue, setFilterValue] = React.useState<string | undefined>();
+
+  React.useEffect(() => {
+    setPage(0);
+  }, [search]);
 
   React.useEffect(() => {
     let active = true;
@@ -87,7 +95,14 @@ export default function PatientTable({ search }: { search: string }) {
         rowCount={100}
         paginationMode="server"
         onPageChange={(newPage) => setPage(newPage)}
+        page={page}
         loading={loading}
+        onRowClick={(params) => {
+          history.push(`/patient/${params.row.id}`);
+        }}
+        // filterMode="server"
+        // filterModel={filterModel}
+        // onFilterModelChange={(model) => setFilterModel(model)}
       />
     </div>
   );
