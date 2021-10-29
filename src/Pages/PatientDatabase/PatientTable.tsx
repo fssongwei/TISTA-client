@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DataGrid, GridFilterModel } from "@mui/x-data-grid";
 import history from "../../utils/history";
-
+import faker from "faker";
 interface PatientData {
   id: string;
   name: string;
@@ -43,8 +43,8 @@ const loadServerRows = (
       for (let i = 0; i < (pageSize || 10); i++) {
         newData.push({
           id: ((page || 0) * 10 + i).toString(),
-          name: `John Doe ${search || ""}`,
-          update: new Date(),
+          name: faker.name.findName(),
+          update: faker.date.past(),
           status: Math.random() < 0.5 ? "open" : "closed",
         });
       }

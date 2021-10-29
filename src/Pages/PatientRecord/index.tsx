@@ -6,6 +6,9 @@ import { match } from "react-router-dom";
 import RecordTable from "./RecordTable";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Upload from "./Upload";
+import { Link } from "react-router-dom";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function PatientDatabase({
   match,
@@ -18,18 +21,29 @@ export default function PatientDatabase({
       sx={{ py: 8, display: "flex", flexDirection: "column", flex: "1" }}
       maxWidth="lg"
     >
+      <Box sx={{ pb: 2 }}>
+        <Button
+          size="small"
+          variant="outlined"
+          startIcon={<KeyboardReturnIcon />}
+          component={Link}
+          to="/"
+        >
+          back to patient database
+        </Button>
+      </Box>
       <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
         <Grid container spacing={2} sx={{ flex: "1" }}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             Patient Information: {patientId}
           </Grid>
           <Grid
             item
-            xs={8}
+            xs={9}
             sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
           >
             <Stack spacing={2} direction="row" sx={{ py: 2 }}>
-              <Button variant="outlined">Upload</Button>
+              <Upload />
               <Button variant="contained">Run Analysis</Button>
             </Stack>
             <RecordTable patientId={patientId} />

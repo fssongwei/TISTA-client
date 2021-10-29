@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DataGrid, GridFilterModel } from "@mui/x-data-grid";
-import history from "../../utils/history";
+import { DataGrid, GridRenderCellParams } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
 
 interface Record {
   id: string;
@@ -24,6 +24,9 @@ const columns = [
     flex: 1,
     type: "string",
     filterable: false,
+    renderCell: (params: GridRenderCellParams) => (
+      <Link to={`/report/${params.value}`}>link</Link>
+    ),
   },
   {
     field: "chance",
@@ -48,7 +51,7 @@ const fetchRecord = (patientId: string): Promise<Record[]> => {
         newData.push({
           id: (i + 1).toString(),
           record: `some record name`,
-          report: `some report name`,
+          report: (i + 1).toString(),
           chance: `${Math.floor(Math.random() * 100)}%`,
           status: Math.random() < 0.5 ? "open" : "closed",
         });
