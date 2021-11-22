@@ -35,7 +35,7 @@ export type TableData = PatientData[];
 enum STATUS {
   NORMAL,
   REVIEWING,
-  FRAUD,
+  INACTIVE,
 }
 
 const fetchData = ({
@@ -60,7 +60,7 @@ const fetchData = ({
               ? STATUS.NORMAL
               : Math.random() < 0.5
               ? STATUS.REVIEWING
-              : STATUS.FRAUD,
+              : STATUS.INACTIVE,
           reviewer: faker.name.findName(),
         });
       }

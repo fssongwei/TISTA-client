@@ -4,6 +4,7 @@ import DateRangePicker, { DateRange } from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import FormControl from "@mui/material/FormControl";
+import "./index.scss";
 
 export default function BasicDateRangePicker({
   selectedDates,
@@ -15,14 +16,14 @@ export default function BasicDateRangePicker({
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateRangePicker
-        startText="Update Date"
+        startText="Updated Date"
         value={selectedDates}
         onChange={(newSelectedDates) => {
           setSelectedDates(newSelectedDates);
         }}
         renderInput={(startProps, endProps) => {
           return (
-            <FormControl sx={{ m: 1, width: 160 }}>
+            <FormControl className="date-range-picker">
               <TextField
                 variant="standard"
                 onFocus={startProps.inputProps?.onFocus}
@@ -34,12 +35,17 @@ export default function BasicDateRangePicker({
                   value: [],
                   renderValue: (selected) => startProps.label,
                   displayEmpty: true,
+                  sx: {
+                    height: "40px",
+                    border: "none",
+                    pl: "10px",
+                    background: "#4861AD",
+                    color: "white",
+                    borderRadius: "10px",
+                  },
                 }}
                 children={[]}
               />
-
-              {/* <TextField variant="standard" {...startProps} /> */}
-              {/* <TextField {...endProps} /> */}
             </FormControl>
           );
         }}

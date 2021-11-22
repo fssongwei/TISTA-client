@@ -27,4 +27,5 @@ const AppLayoutStyle = {
   display: "flex",
   alignItems: "stretch",
   height: "100%",
+  background: "#FAFAFA",
 };

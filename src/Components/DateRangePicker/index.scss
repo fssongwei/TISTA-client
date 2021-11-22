@@ -1,0 +1,10 @@
+.date-range-picker {
+  .MuiInput-underline::before,
+  .MuiInput-underline::after {
+    border: none !important;
+  }
+
+  .MuiSelect-icon {
+    color: white;
+  }
+}

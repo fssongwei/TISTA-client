@@ -1,7 +1,3 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -13,51 +9,78 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material";
 import "./Header.scss";
 import { useLocation } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import SettingsIcon from "@mui/icons-material/Settings";
+import history from "../utils/history";
 
 const TabButton = ({
   isActive,
   Icon,
   to,
+  title,
 }: {
   isActive?: boolean;
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   to: string;
+  title: string;
 }) => {
-  const background = isActive ? "#4861AD" : "transparent";
-  const color = isActive ? "white" : "#4861AD";
   return (
-    <IconButton
-      sx={{ mr: 0 }}
-      component={Link}
-      to={to}
-      size="large"
-      className="icon-button"
-      style={{ background }}
+    <Button
+      variant="text"
+      startIcon={<Icon />}
+      className={`tab-button ${isActive ? "active" : ""}`}
+      sx={{ mb: "15px" }}
+      onClick={() => {
+        history.push(to);
+      }}
     >
-      <Icon style={{ color }} sx={{ fontSize: 35 }} />
-    </IconButton>
+      {title}
+    </Button>
   );
 };
 
 const Header = ({ title }: { title?: string }) => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <div className="header">
       <div className="logo">Logo</div>
-      <div className="button-group">
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
+      >
+        <TabButton
+          isActive={location.pathname === "/dashboard"}
+          Icon={DashboardIcon}
+          to="/"
+          title="Dashboard"
+        />
         <TabButton
           isActive={location.pathname === "/"}
-          Icon={StorageIcon}
+          Icon={AccountBoxIcon}
           to="/"
+          title="Patients"
+        />
+        <TabButton
+          isActive={location.pathname === "/claims"}
+          Icon={AssignmentIcon}
+          to="/"
+          title="Claims"
         />
         <TabButton
           isActive={location.pathname === "/upload"}
-          Icon={UploadFileRoundedIcon}
+          Icon={AddBoxIcon}
           to="/upload"
+          title="Add Claim"
         />
-        <TabButton isActive={false} Icon={HistoryIcon} to="/" />
-      </div>
+        <TabButton
+          isActive={false}
+          Icon={SettingsIcon}
+          to="/"
+          title="Setting"
+        />
+      </Box>
     </div>
   );
 };

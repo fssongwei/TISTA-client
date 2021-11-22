@@ -3,6 +3,7 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
+import "./index.scss";
 
 const Search = ({
   search,
@@ -17,15 +18,19 @@ const Search = ({
     <Box
       component="form"
       sx={{ display: "flex", alignItems: "center" }}
-      style={{ minWidth: "500px", width: "50%" }}
+      style={{
+        maxWidth: "400px",
+        width: "50%",
+        border: "none",
+        background: "white",
+        borderRadius: "10px",
+        height: "50px",
+      }}
+      className="search-bar"
     >
       <InputBase
         sx={{ flex: 1, px: " 15px" }}
-        style={{
-          border: "1px solid #8F8F8F",
-          borderRadius: "10px",
-          height: "50px",
-        }}
+        className="search-input"
         placeholder="Search Patient"
         value={searchTerm}
         onChange={(event) => {
@@ -36,10 +41,9 @@ const Search = ({
         type="submit"
         sx={{ ml: "15px" }}
         aria-label="search"
-        style={buttonStyle}
+        // style={buttonStyle}
         onClick={(event) => {
           event.preventDefault();
-          console.log(searchTerm);
           setSearch(searchTerm);
         }}
       >
@@ -47,14 +51,6 @@ const Search = ({
       </IconButton>
     </Box>
   );
-};
-
-const buttonStyle = {
-  width: "50px",
-  height: "50px",
-  borderRadius: "15px",
-  background: "#4861AD",
-  color: "white",
 };
 
 export default Search;

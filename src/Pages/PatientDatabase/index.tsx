@@ -9,6 +9,8 @@ import { DateRange } from "@mui/lab/DateRangePicker";
 import "./index.scss";
 import Pagination from "@mui/material/Pagination";
 import fetchData, { Query, TableData } from "./fetchData";
+import Grid from "@mui/material/Grid";
+import PatientPanel from "./PatientPanel";
 
 export default function PatientDatabase() {
   const [search, setSearch] = React.useState("");
@@ -24,6 +26,13 @@ export default function PatientDatabase() {
   const [totalPage, setTotalPage] = React.useState(0);
   const [tableData, setTableData] = React.useState<TableData | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [selectedPatientId, setSelectedPatientId] = React.useState<
+    string | null
+  >(null);
+
+  const selectedPatient = (id: string) => {
+    setSelectedPatientId(id);
+  };
 
   const fetch = async () => {
     setLoading(true);
@@ -59,61 +68,85 @@ export default function PatientDatabase() {
   }, [selectedDates]);
 
   return (
-    <Container
-      sx={{
-        pt: "60px",
-        display: "flex",
-        flexDirection: "column",
-        flex: "1",
-        justifyContent: "space-between",
-      }}
-      maxWidth="lg"
-      style={{ height: "100%" }}
+    <Grid
+      container
       className="patient-database"
+      maxWidth="lg"
+      style={{ height: "100%", maxWidth: "2000px" }}
+      sx={{ pt: "30px", px: "30px" }}
     >
-      <Box sx={{ mb: "20px" }}>
-        <Box>
-          <Search search={search} setSearch={setSearch} />
+      <Grid
+        item
+        xs={9}
+        sx={{
+          // mt: "30px",
+          display: "flex",
+          flexDirection: "column",
+          flex: "1",
+          justifyContent: "space-between",
+          mr: "26px",
+        }}
+        style={{ height: "100%" }}
+      >
+        <Box sx={{ mb: "20px" }}>
+          <Box>
+            <Search search={search} setSearch={setSearch} />
+          </Box>
+          <Typography
+            variant="h4"
+            gutterBottom
+            component="div"
+            className="title"
+            sx={{ mt: "30px", ml: "15px" }}
+          >
+            Patients
+          </Typography>
+          <Filter
+            selectedStatus={selectedStatus}
+            setSelectedStatus={setSelectedStatus}
+            selectedReviewers={selectedReviewers}
+            setSelectedReviewers={setSelectedReviewers}
+            selectedDates={selectedDates}
+            setSelectedDates={setSelectedDates}
+          />
         </Box>
-        <Filter
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
-          selectedReviewers={selectedReviewers}
-          setSelectedReviewers={setSelectedReviewers}
-          selectedDates={selectedDates}
-          setSelectedDates={setSelectedDates}
-        />
-      </Box>
-      <Box sx={{ mb: "20px" }}>
-        <Typography
-          variant="h4"
-          gutterBottom
-          component="div"
-          className="title"
-          sx={{ mb: "30px" }}
-        >
-          Patient Database
-        </Typography>
-        <PatientTable loading={loading} tableData={tableData} />
-        <Box sx={{ display: "flex", justifyContent: "right" }}>
-          {totalPage === 0 ? (
-            <Box sx={{ height: "100px" }}></Box>
-          ) : (
-            <Pagination
-              count={totalPage}
-              page={currentPage}
-              onChange={(event, value) => {
-                setCurrentPage(value);
-              }}
-              color="primary"
-              shape="rounded"
-              size="large"
-              // hidePrevButton
-              sx={{ py: "30px" }}
-            />
-          )}
+        <Box sx={{ mb: "20px" }}>
+          <PatientTable
+            loading={loading}
+            tableData={tableData}
+            selectedPatient={selectedPatient}
+          />
+          <Box sx={{ display: "flex", justifyContent: "right" }}>
+            {totalPage === 0 ? (
+              <Box sx={{ height: "100px" }}></Box>
+            ) : (
+              <Pagination
+                count={totalPage}
+                page={currentPage}
+                onChange={(event, value) => {
+                  setCurrentPage(value);
+                }}
+                color="primary"
+                shape="rounded"
+                size="large"
+                sx={{ py: "30px" }}
+              />
+            )}
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Grid>
+      <Grid
+        item
+        xs={3}
+        sx={{
+          pb: "50px",
+          pt: "100px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <PatientPanel patientId={selectedPatientId} />
+      </Grid>
+    </Grid>
   );
 }

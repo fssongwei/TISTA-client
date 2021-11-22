@@ -1,10 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import ListItemText from "@mui/material/ListItemText";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
 import "./Filter.scss";
 import DateRangePicker from "../../Components/DateRangePicker";
 import { DateRange } from "@mui/lab/DateRangePicker";
@@ -12,62 +7,10 @@ import { DateRange } from "@mui/lab/DateRangePicker";
 import Chip from "@mui/material/Chip";
 import moment from "moment";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 160,
-    },
-  },
-};
+import Selector from "../../Components/Selector";
 
-const status = ["Normal", "Reviewing", "Fraud"];
+const status = ["Normal", "Reviewing", "Inactive"];
 const reviewers = ["ReviewerA", "ReviewerB", "ReviewerC"];
-
-const Selector = ({
-  options,
-  selectedItem,
-  setSelectedItem,
-  label,
-}: {
-  options: string[];
-  selectedItem: string[];
-  setSelectedItem: React.Dispatch<React.SetStateAction<string[]>>;
-  label: string;
-}) => {
-  const handleChange = (event: SelectChangeEvent<typeof selectedItem>) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedItem(typeof value === "string" ? value.split(",") : value);
-  };
-
-  return (
-    <div>
-      <FormControl sx={{ mr: "50px", width: 160 }}>
-        <Select
-          multiple
-          value={selectedItem}
-          onChange={handleChange}
-          renderValue={(selected) => label}
-          MenuProps={MenuProps}
-          displayEmpty
-          variant="standard"
-          sx={{ height: "40px", border: "none", m: "0" }}
-        >
-          {options.map((name) => (
-            <MenuItem key={name} value={name} sx={{ height: "40px" }}>
-              <Checkbox checked={selectedItem.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
-  );
-};
 
 export default function Filter({
   selectedStatus,
@@ -86,25 +29,29 @@ export default function Filter({
 }) {
   return (
     <Box className="filter">
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "right" }}
+      >
+        {/* <Selector
+          selectedItem={selectedReviewers}
+          setSelectedItem={setSelectedReviewers}
+          options={reviewers}
+          label="Reviewer"
+          sx={{ mr: "17px" }}
+        /> */}
+        <DateRangePicker
+          selectedDates={selectedDates}
+          setSelectedDates={setSelectedDates}
+        />
         <Selector
           selectedItem={selectedStatus}
           setSelectedItem={setSelectedStatus}
           options={status}
           label="Status"
-        />
-        <Selector
-          selectedItem={selectedReviewers}
-          setSelectedItem={setSelectedReviewers}
-          options={reviewers}
-          label="Reviewer"
-        />
-        <DateRangePicker
-          selectedDates={selectedDates}
-          setSelectedDates={setSelectedDates}
+          sx={{ ml: "17px" }}
         />
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", justifyContent: "right", mt: "10px" }}>
         <Tags
           selectedItem={selectedStatus}
           setSelectedItem={setSelectedStatus}
