@@ -6,15 +6,11 @@
   align-items: center;
 
   .logo {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    font-family: Inter;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    img {
+      width: "140px";
+    }
   }
 
   // .button-group {

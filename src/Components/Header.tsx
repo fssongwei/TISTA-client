@@ -46,7 +46,9 @@ const Header = ({ title }: { title?: string }) => {
   const location = useLocation();
   return (
     <div className="header">
-      <div className="logo">Logo</div>
+      <div className="logo">
+        <img src="/logo.png" alt="logo" style={{ width: "140px" }} />
+      </div>
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
       >

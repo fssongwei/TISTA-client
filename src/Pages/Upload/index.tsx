@@ -63,7 +63,7 @@ const UploadProgress = ({
 }) => {
   return (
     <Box
-      sx={{ background: "#4861AD" }}
+      // sx={{ background: "#4861AD" }}
       style={{ height: "100%" }}
       className="upload"
     >
@@ -159,7 +159,7 @@ export default function Upload() {
 
   return (
     <Box
-      sx={{ background: "#4861AD" }}
+      // sx={{ background: "#4861AD" }}
       style={{ height: "100%" }}
       className="upload"
     >
