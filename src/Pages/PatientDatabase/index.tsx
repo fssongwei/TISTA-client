@@ -116,7 +116,7 @@ export default function PatientDatabase() {
             tableData={tableData}
             selectedPatient={selectedPatient}
           />
-          <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             {totalPage === 0 ? (
               <Box sx={{ height: "100px" }}></Box>
             ) : (

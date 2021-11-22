@@ -43,7 +43,7 @@ export default function PatientDatabase({
             width: "300px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "end",
+            justifyContent: "flex-end",
           }}
         >
           Review Result:

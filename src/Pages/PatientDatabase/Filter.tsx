@@ -30,7 +30,11 @@ export default function Filter({
   return (
     <Box className="filter">
       <Box
-        sx={{ display: "flex", alignItems: "center", justifyContent: "right" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
       >
         {/* <Selector
           selectedItem={selectedReviewers}
@@ -51,7 +55,7 @@ export default function Filter({
           sx={{ ml: "17px" }}
         />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "right", mt: "10px" }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: "10px" }}>
         <Tags
           selectedItem={selectedStatus}
           setSelectedItem={setSelectedStatus}
@@ -88,7 +92,7 @@ const DateTag = ({
     <Box
       sx={{
         display: "flex",
-        justifyContent: "left",
+        justifyContent: "flex-start",
       }}
     >
       <Chip
