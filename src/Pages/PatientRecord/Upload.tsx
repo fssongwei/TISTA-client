@@ -28,10 +28,10 @@ export default function FormDialog() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Upload
+        Upload New Claim
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle>Upload Claim</DialogTitle>
+        <DialogTitle>Upload New Claim</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             To subscribe to this website, please enter your email address here.
@@ -44,7 +44,7 @@ export default function FormDialog() {
             label="Patient Name"
             type="string"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             autoFocus
@@ -53,7 +53,7 @@ export default function FormDialog() {
             label="Patient ID"
             type="string"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <label htmlFor="contained-button-file">
             <Input
@@ -76,7 +76,7 @@ export default function FormDialog() {
             multiline
             fullWidth
             rows={4}
-            variant="standard"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>

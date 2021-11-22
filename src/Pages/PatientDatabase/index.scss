@@ -1,0 +1,43 @@
+.MuiDataGrid-cell:focus {
+  outline: none !important;
+}
+
+// div.title {
+//   font-weight: 300;
+//   font-size: 28px;
+// }
+
+.patient-database {
+  .title {
+    font-family: Open Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .patient-table {
+    tr {
+      height: 55px;
+    }
+    thead tr th,
+    tbody tr td {
+      font-family: Open Sans;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+
+    thead tr th {
+      color: #5a5959;
+    }
+    tbody tr td {
+      border-bottom: none;
+    }
+  }
+}

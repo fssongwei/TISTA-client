@@ -1,0 +1,13 @@
+.filter {
+  .MuiInput-underline::before,
+  .MuiInput-underline::after {
+    border: none !important;
+  }
+
+  .MuiButtonBase-root {
+    border-radius: 15px;
+    .MuiSvgIcon-root {
+      color: white !important;
+    }
+  }
+}
