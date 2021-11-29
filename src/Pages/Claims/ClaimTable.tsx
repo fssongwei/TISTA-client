@@ -11,8 +11,8 @@ import TableRow from "@mui/material/TableRow";
 import { TableData } from "./fetchData";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const riskLevels = ["Low Risk", "Low Risk", "Mid Risk", "High Risk"];
-const riskLevelColors = ["#35A52B", "#35A52B", "#FE6B0C", "#DF3030"];
+const riskLevels = ["Unlikely", "Low Risk", "Mid Risk", "High Risk"];
+const riskLevelColors = ["#35A52B", "#DEAC2B", "#FE6B0C", "#DF3030"];
 
 export default function PatientTable({
   tableData,

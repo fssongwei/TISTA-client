@@ -49,7 +49,9 @@ const ProgressBar = ({ isFinish }: { isFinish: boolean }) => {
         variant={isFinish ? "determinate" : "indeterminate"}
         value={100}
       />
-      <CheckCircleIcon sx={{ color: "#35B0F2", fontSize: "25px" }} />
+      {isFinish && (
+        <CheckCircleIcon sx={{ color: "#35B0F2", fontSize: "25px" }} />
+      )}
     </Box>
   );
 };
@@ -115,7 +117,7 @@ const UploadProgress = ({
                 <Button
                   variant="contained"
                   className="upload-btn completed"
-                  onClick={() => history.push("/")}
+                  onClick={() => history.push("/claims")}
                 >
                   Back to Database
                 </Button>
