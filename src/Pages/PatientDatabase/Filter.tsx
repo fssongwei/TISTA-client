@@ -128,7 +128,7 @@ const Tags = ({
     <Box
       sx={{
         display: "flex",
-        justifyContent: "left",
+        justifyContent: "flex-start",
       }}
     >
       {selectedItem.map((item) => {

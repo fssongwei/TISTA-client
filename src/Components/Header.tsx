@@ -67,7 +67,7 @@ const Header = ({ title }: { title?: string }) => {
         <TabButton
           isActive={location.pathname === "/claims"}
           Icon={AssignmentIcon}
-          to="/"
+          to="/claims"
           title="Claims"
         />
         <TabButton

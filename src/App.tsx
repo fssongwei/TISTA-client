@@ -6,6 +6,7 @@ import PatientDatabase from "./Pages/PatientDatabase";
 import PatientRecord from "./Pages/PatientRecord";
 import Upload from "./Pages/Upload";
 import Report from "./Pages/Report";
+import Claims from "./Pages/Claims";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <div style={{ flex: 1 }}>
           <Route path="/" exact component={PatientDatabase} />
           <Route path="/upload" exact component={Upload} />
+          <Route path="/claims" exact component={Claims} />
           <Route path="/patient/:id" exact component={PatientRecord} />
           <Route path="/report/:id" exact component={Report} />
         </div>
