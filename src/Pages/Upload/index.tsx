@@ -14,12 +14,14 @@ import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Link } from "react-router-dom";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import uploadClaim from "./uploadClaim";
+import uploadClaim, { ErrorResponse } from "./uploadClaim";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import history from "../../utils/history";
+import Flash from "../../Components/Flash";
+import request, { AxiosError } from "axios";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 15,
@@ -59,9 +61,11 @@ const ProgressBar = ({ isFinish }: { isFinish: boolean }) => {
 const UploadProgress = ({
   finishUpload,
   clearUpload,
+  claimId,
 }: {
   finishUpload: boolean;
   clearUpload: Function;
+  claimId: string;
 }) => {
   return (
     <Box
@@ -111,7 +115,11 @@ const UploadProgress = ({
                 >
                   Upload Another Claim
                 </Button>
-                <Button variant="contained" className="upload-btn completed">
+                <Button
+                  variant="contained"
+                  className="upload-btn completed"
+                  onClick={() => history.push(`/report/${claimId}`)}
+                >
                   View Result
                 </Button>
                 <Button
@@ -137,6 +145,8 @@ export default function Upload() {
   const [files, setFiles] = React.useState<File[]>([]);
   const [uploading, setUploading] = React.useState(false);
   const [finishUpload, setFinishUpload] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [claimId, setClaimId] = React.useState("");
 
   const clearUpload = () => {
     setName("");
@@ -149,22 +159,32 @@ export default function Upload() {
 
   const handleUpload = async () => {
     setUploading(true);
-    let response = await uploadClaim(name, id, comment, files[0]);
-    setFinishUpload(true);
+    try {
+      let response = await uploadClaim(name, id, comment, files[0]);
+      setClaimId(response.data.claimId);
+      setFinishUpload(true);
+    } catch (error) {
+      setUploading(false);
+      if (request.isAxiosError(error) && error.response) {
+        setErrorMessage((error.response.data as ErrorResponse).msg);
+      } else {
+        setErrorMessage("Unknown Error");
+      }
+    }
   };
 
   if (uploading) {
     return (
-      <UploadProgress finishUpload={finishUpload} clearUpload={clearUpload} />
+      <UploadProgress
+        finishUpload={finishUpload}
+        clearUpload={clearUpload}
+        claimId={claimId}
+      />
     );
   }
 
   return (
-    <Box
-      // sx={{ background: "#4861AD" }}
-      style={{ height: "100%" }}
-      className="upload"
-    >
+    <Box style={{ height: "100%" }} className="upload">
       <Container
         sx={{
           pt: "60px",
@@ -254,6 +274,7 @@ export default function Upload() {
           </Box>
         </Paper>
       </Container>
+      <Flash message={errorMessage}></Flash>
     </Box>
   );
 }

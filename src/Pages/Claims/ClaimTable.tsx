@@ -63,7 +63,14 @@ export default function PatientTable({
                   <TableCell align="center">{row.claimId}</TableCell>
                   <TableCell align="center">{row.name}</TableCell>
                   <TableCell align="center">
-                    <a href="row.filePath">{getFileName(row.filePath)}</a>
+                    <a
+                      href={new URL(
+                        row.filePath,
+                        process.env.REACT_APP_API_BASE_URL
+                      ).toString()}
+                    >
+                      Claim File.txt
+                    </a>
                   </TableCell>
                   <TableCell align="center">N/A</TableCell>
                   <TableCell align="center">

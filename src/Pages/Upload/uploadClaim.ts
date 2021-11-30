@@ -4,12 +4,17 @@ interface UploadResponse {
   claimId: string;
 }
 
+export interface ErrorResponse {
+  STATUS: string;
+  msg: string;
+}
+
 const uploadClaim = async (
   name: string,
   id: string,
   comment: string,
   file: File
-): Promise<AxiosResponse<any, any>> => {
+): Promise<AxiosResponse<UploadResponse, ErrorResponse>> => {
   let param = new FormData();
   param.append("file", file);
   param.append("name", name);
