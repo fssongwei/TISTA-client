@@ -221,7 +221,6 @@ export default function Upload() {
           </IconButton>
           <h3 className="title">Upload New Claim</h3>
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Patient Name"
@@ -235,7 +234,6 @@ export default function Upload() {
             }}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="id"
             label="Patient ID"
