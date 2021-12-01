@@ -13,13 +13,37 @@ import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import "./index.scss";
+import fetchReport, { Report } from "./fetchReport";
+import Label from "../../Components/Label";
 
-export default function PatientDatabase({
+const riskLevels = ["Unlikely", "Low Risk", "Mid Risk", "High Risk"];
+const riskLevelColors = ["#35A52B", "#DEAC2B", "#FE6B0C", "#DF3030"];
+
+export default function ReportPage({
   match,
 }: {
   match: match<{ id: string }>;
 }) {
-  const reportId = match.params.id;
+  const [loading, setLoading] = React.useState(true);
+  const [report, setReport] = React.useState<null | Report>(null);
+  const claimId = match.params.id;
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resReport = await fetchReport(claimId);
+        setReport(resReport);
+      } catch {}
+      setLoading(false);
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
+
   return (
     <Box style={{ height: "100%" }} className="report">
       <Container
@@ -56,12 +80,21 @@ export default function PatientDatabase({
           >
             <CancelIcon style={{ color: "#4861AD" }} sx={{ fontSize: 30 }} />
           </IconButton>
-          <h3 className="title">Report ID - {reportId}</h3>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <h3 className="title" style={{ marginRight: "13px" }}>
+              Report ID - {claimId}
+            </h3>
+            <Label
+              title={riskLevels[parseInt(report!.riskLevel)]}
+              color={riskLevelColors[parseInt(report!.riskLevel)]}
+            />
+          </Box>
           <Box className="info">
             <ul>
-              <li>Patient Name: </li>
-              <li>Patient ID: </li>
-              <li>Review Status: Not Completed</li>
+              <li>Patient Name: {report?.patientName}</li>
+              <li>Patient ID: {report?.patientId}</li>
+              <li>Review Status: {report?.reviewStatus}</li>
+              <li>Comment: {report?.comment}</li>
             </ul>
           </Box>
           <Box
@@ -77,7 +110,7 @@ export default function PatientDatabase({
             />
             <a
               href={new URL(
-                "TODO: REPLACE URL HERE",
+                report!.claim,
                 process.env.REACT_APP_API_BASE_URL
               ).toString()}
             >
@@ -89,19 +122,19 @@ export default function PatientDatabase({
             <table className="table">
               <tr>
                 <td className="table-title">Provider Name</td>
-                <td className="table-value">XXX Hospital</td>
+                <td className="table-value">{report?.providerName}</td>
               </tr>
               <tr>
                 <td className="table-title">Facility Location</td>
-                <td className="table-value">XXX Location</td>
+                <td className="table-value">{report?.facilityLocation}</td>
               </tr>
               <tr>
                 <td className="table-title">Net Value</td>
-                <td className="table-value">5000</td>
+                <td className="table-value">{report?.netValue}</td>
               </tr>
               <tr>
                 <td className="table-title">Bill Time Difference</td>
-                <td className="table-value">5115600</td>
+                <td className="table-value">{report?.billTimeDifference}</td>
               </tr>
             </table>
           </Box>
